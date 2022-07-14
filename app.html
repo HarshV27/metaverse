@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8" />
+    <title>A-Frame Sharedspace Component</title>
+    <script src="https://aframe.io/releases/0.7.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-sharedspace-component@1.0.1/dist/aframe-sharedspace-component.min.js"></script>
+    <script src="https://unpkg.com/aframe-text-geometry-component@0.5.1/dist/aframe-text-geometry-component.min.js"></script>
+    <script src="https://rawgit.com/feiss/aframe-environment-component/master/dist/aframe-environment-component.min.js"></script>
+
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <a class="hide" href="#">Hide</a>
+    <section class="instructions">
+      <h1>A-Frame Sharedspace Component</h1>
+      <p>
+        Grant this site permission to access your microphone and share the
+        following link with your friends (or open it in another browser/tab).
+        Wait for a friend to start chatting.
+      </p>
+      <span class="link"></span>
+      <a class="move" href="./">Move to another room.</a>
+    </section>
+    <a-scene embedded>
+      <a-assets>
+        <img
+          id="pink"
+          src="https://img.gs/bbdkhfbzkk/stretch/http://i.imgur.com/1hyyIUi.jpg"
+          crossorigin="anonymous"
+        />
+        <img
+          src="https://img.gs/bbdkhfbzkk/stretch/https://i.imgur.com/25P1geh.png"
+          id="grid"
+          crossorigin="anonymous"
+        />
+        <img
+          src="https://img.gs/bbdkhfbzkk/2048x1024,stretch/http://i.imgur.com/WMNH2OF.jpg"
+          id="chrome"
+          crossorigin="anonymous"
+        />
+        <img
+          id="sky"
+          src="https://img.gs/bbdkhfbzkk/2048x2048,stretch/http://i.imgur.com/WqlqEkq.jpg"
+          crossorigin="anonymous"
+        />
+        <a-asset-item
+          id="dawningFont"
+          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2FdawningOfANewDayRegular.typeface.json?1490305922844"
+        ></a-asset-item>
+        <a-asset-item
+          id="exoFont"
+          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2Black.typeface.json?1490305922150"
+        ></a-asset-item>
+        <a-asset-item
+          id="exoItalicFont"
+          src="https://cdn.glitch.com/c719c986-c0c5-48b8-967c-3cd8b8aa17f3%2Fexo2BlackItalic.typeface.json?1490305922725"
+        ></a-asset-item>
+        <a-mixin
+          id="eye"
+          geometry="primitive: sphere; radius: 0.2"
+          material="shader: flat; side: double; color: #FFF"
+        ></a-mixin>
+        <a-mixin
+          id="pupil"
+          geometry="primitive: sphere; radius: 0.05"
+          material="shader: flat; side: double; color: #222"
+        ></a-mixin>
+        <a-mixin
+          id="arm"
+          geometry="primitive: box; depth: 0.2; height: 1.5; width: 0.2"
+          material="color: #222; shader: flat"
+        ></a-mixin>
+      </a-assets>
+
+      <a-entity sharedspace="audio: true; hold: true" avatars>
+        <!-- Room -->
+        <a-sky color="#333"></a-sky>
+        <a-plane rotation="-90 0 0" width="15" height="15" color="#777">
+          <a-entity environment="preset: forest"><a-entity>
+        </a-plane>
+
+        <!-- Table -->
+        <a-cylinder
+          class="table"
+          position="0 0.8 0"
+          height="0.02"
+          color="#8ae0f4"
+          segments-height="1"
+          segments-radial="6"
+        >
+        </a-cylinder>
+      </a-entity>
+      <!-- text -->
+
+      <!-- the animation nut going on -->
+      <a-entity
+        scale="2 2 2"
+        geometry="primitive: torusKnot"
+        position="0 9 -10"
+        material="color: magenta; metalness:1; roughness: 0.1; sphericalEnvMap: #sky;"
+      >
+        <a-animation
+          easing="linear"
+          attribute="rotation"
+          dur="10000"
+          to="0 0 360"
+          repeat="indefinite"
+        ></a-animation>
+      </a-entity>
+      <a-entity
+        position="0 -5 0"
+        geometry="primitive: plane; width: 10000; height: 10000;"
+        rotation="-90 0 0"
+        material="src: #grid; repeat: 10000 10000; transparent: true;metalness:0.6; roughness: 0.4; sphericalEnvMap: #sky;"
+      >
+      </a-entity>
+      <a-entity position="-3 1 -6" rotation="5 0 0">
+        <a-entity
+          rotation="0 0 5"
+          position="0 2 0.2"
+          text-geometry="value: Shopping-mall; font: #dawningFont; bevelEnabled: true; bevelSize: 0.05; bevelThickness: 0.05; curveSegments: 12; size: 1; height: 0;"
+          material="color:lavenderblush; metalness:1; roughness: 0; sphericalEnvMap: #pink;"
+        >
+        </a-entity>
+
+        <a-entity
+          position="-0.5 0.5 -0.5"
+          scale="0.6 1.2 1"
+          text-geometry="value: VR on the web; font: #exoFont; bevelEnabled: true; bevelSize: 0.1; bevelThickness: 0.1; curveSegments: 1; size: 1.5; height: 0.5;"
+          material="color:pink; metalness:0.9; roughness: 0.05; sphericalEnvMap: #chrome;"
+        ></a-entity>
+
+        <a-entity
+          position="1 0 0.3"
+          text-geometry="value: 2017; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0;"
+          material="shader: flat; color: white"
+        >
+        </a-entity>
+        <a-entity
+          position="1 0 0.3"
+          text-geometry="value: 2017; font: #exoItalicFont; style: italic; size: 0.8; weight: bold; height: 0; bevelEnabled: true; bevelSize: 0.04; bevelThickness: 0.04; curveSegments: 1"
+          material="shader: flat; color: white; transparent: true; opacity: 0.4"
+        >
+        </a-entity>
+      </a-entity>
+
+      <!-- <a-entity>
+        <a-entity camera look-controls wasd-controls id="user-cam">
+          <a-entity
+            position="0 0 -3"
+            scale="0.2 0.2 0.2"
+            geometry="primitive: ring; radiusOuter: 0.20; radiusInner: 0.13;"
+            material="color: #ADD8E6; shader: flat"
+            cursor="maxDistance: 30; fuse: true"
+          >
+            <a-animation
+              begin="click"
+              easing="ease-in"
+              attribute="scale"
+              fill="backwards"
+              from="0.1 0.1 0.1"
+              to="1 1 1"
+              dur="150"
+            ></a-animation>
+            <a-animation
+              begin="fusing"
+              easing="ease-in"
+              attribute="scale"
+              fill="forwards"
+              from="1 1 1"
+              to="0.2 0.2 0.2"
+              dur="1500"
+            ></a-animation>
+          </a-entity>
+        </a-entity>
+      </a-entity> -->
+    </a-scene>
+    <template>
+      <a-entity>
+        <a-entity
+          obj-model="obj: url(https://cdn.glitch.com/4e53a88a-96d2-46e5-ab4b-f8f1b9c2d486%2Fface.obj?1506059732633)"
+          rotation="0 180 0"
+          scale="0.01 0.01 0.01"
+        ></a-entity>
+        <!--
+      Anime Face Model Stocking(https://sketchfab.com/models/d049b6a85d204057b170ef9dbc851200) by stocking(https://sketchfab.com/stocking) is licensed under CC Attribution(http://creativecommons.org/licenses/by/4.0/)
+      -->
+      </a-entity>
+    </template>
+    <script>
+      var hideButton = document.querySelector(".hide");
+      var instructions = document.querySelector(".instructions");
+      hideButton.onclick = function (evt) {
+        instructions.classList.toggle("hidden");
+        this.textContent = instructions.classList.contains("hidden")
+          ? "Show"
+          : "Hide";
+        return false;
+      };
+
+      var scene = document.querySelector("a-scene");
+      var room = document.querySelector("[sharedspace]");
+      var table = document.querySelector(".table");
+
+      // Make the avatar to look at the center of the table.
+      room.addEventListener("avataradded", function onAdded(evt) {
+        // Fixing should happen after the avatar fully loads.
+        // Only then, it is safe to alter the avatar’s components.
+        var avatar = evt.detail.avatar;
+        if (!avatar.hasLoaded) {
+          avatar.addEventListener("loaded", onAdded.bind(null, evt));
+          return;
+        }
+
+        var tablePosition = table.getAttribute("position");
+        var avatarY = avatar.getAttribute("position").y;
+        avatar.object3D.lookAt(
+          new THREE.Vector3(tablePosition.x, avatarY, tablePosition.z)
+        );
+
+        // It is not enough to modify the underlaying Three object. It is
+        // neccessary to use the A-Frame API for the sharedspace component to
+        // be able of serialize the rotation correctly.
+        var radToDeg = THREE.Math.radToDeg;
+        var rotation = avatar.object3D.rotation;
+        rotation.y += Math.PI;
+
+        avatar.setAttribute("rotation", {
+          x: radToDeg(rotation.x),
+          y: radToDeg(rotation.y),
+          z: radToDeg(rotation.z),
+        });
+      });
+
+      // Create a new room or join one.
+      let roomName = window.location.search.substr(1);
+      if (!roomName) {
+        roomName = "room-" + Date.now();
+        history.pushState({}, "", window.location + `?${roomName}`);
+      } else {
+        hideButton.click();
+      }
+      connect();
+
+      function connect() {
+        if (!scene.hasLoaded) {
+          scene.addEventListener("loaded", connect);
+          return;
+        }
+        room.setAttribute("sharedspace", { room: roomName, hold: false });
+      }
+
+      // Select link on click.
+      var link = document.querySelector(".link");
+      link.textContent = window.location.href;
+      link.onclick = function () {
+        var range = document.createRange();
+        range.selectNode(link);
+        var selection = document.getSelection();
+        selection.empty();
+        selection.addRange(range);
+      };
+    </script>
+  </body>
+</html>
